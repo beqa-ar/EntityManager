@@ -30,8 +30,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Collection<User>> getUsers(
-            @RequestParam(required = false,  name = "page") final int page
-            , @RequestParam(required = false,  name = "pageSize") final int pageSize) {
+            @RequestParam(required = false,defaultValue = "${page}", name = "page") final int page
+            , @RequestParam(required = false,defaultValue = "${pageSize}", name = "pageSize") final int pageSize) {
 
         log.debug(" GetMapping (getUsers) page: {} pageSize: {} ",page,pageSize);
 

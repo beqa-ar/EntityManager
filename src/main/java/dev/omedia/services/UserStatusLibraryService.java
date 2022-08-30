@@ -3,48 +3,41 @@ package dev.omedia.services;
 
 import dev.omedia.domains.UserStatus;
 import dev.omedia.exceptions.UserStatusNotFoundException;
+import dev.omedia.repositoreis.UserStatusRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserStatusLibraryService {
-    private final Set<UserStatus> UserStatus = new HashSet<>();
+    private final UserStatusRepo repo;
 
-    public List<UserStatus> getUserStatus() {
-        return List.copyOf(UserStatus);
+    @Autowired
+    public UserStatusLibraryService(UserStatusRepo repo) {
+        this.repo = repo;
+    }
+
+    public List<UserStatus> getUserStatuses() {
+        return repo.findAll();
     }
 
     public UserStatus getUserStatus(final long id) {
-        return UserStatus.stream()
-                .filter(UserStatus -> UserStatus.getId() == id)
-                .findAny()
-                .orElseThrow(() -> new UserStatusNotFoundException(id));
+        return repo.findById(id).orElseThrow(()-> new UserStatusNotFoundException(id));
     }
 
-    public boolean addUserStatus(final UserStatus UserStatus) {
-        long maxId = getUserStatus().stream()
-                .map(dev.omedia.domains.UserStatus::getId)
-                .max(Long::compare)
-                .orElse(0L);
-        UserStatus.setId(maxId + 1);
-        return this.UserStatus.add(UserStatus);
+    public boolean addUserStatus(final UserStatus status) {
+        repo.save(status);
+        return true;
     }
 
-    public boolean updateUserStatus(final long id, final UserStatus UserStatus) {
-        if (this.removeUserStatus(id)) {
-            UserStatus.setId(id);
-        }
-        return this.addUserStatus(UserStatus);
+    public UserStatus updateUserStatus(final long id, final UserStatus status) {
+        status.setId(id);
+        return repo.update(status);
     }
 
     public boolean removeUserStatus(final long id) {
-        UserStatus UserStatus = this.UserStatus.stream()
-                .filter(t -> t.getId() == id)
-                .findAny()
-                .orElseThrow(() -> new UserStatusNotFoundException(id));
-        return this.UserStatus.remove(UserStatus);
+        repo.remove(id);
+        return true;
     }
 }

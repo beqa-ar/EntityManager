@@ -24,8 +24,8 @@ public class RestaurantController {
 
     @GetMapping
     public ResponseEntity<Collection<Restaurant>> getRestaurants(
-            @RequestParam(required = false,  name = "page") final int page
-            , @RequestParam(required = false,  name = "pageSize") final int pageSize) {
+            @RequestParam(required = false,defaultValue = "${page}", name = "page") final int page
+            , @RequestParam(required = false,defaultValue = "${pageSize}", name = "pageSize") final int pageSize) {
 
         log.debug(" GetMapping (getRestaurants) page: {} pageSize: {} ",page,pageSize);
 

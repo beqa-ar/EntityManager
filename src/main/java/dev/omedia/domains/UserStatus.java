@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "user_statuses")
+@Table(name = "l_user_statuses")
 public class UserStatus {
 
     @Id

@@ -24,8 +24,8 @@ public class RestaurantBranchController {
 
     @GetMapping
     public ResponseEntity<Collection<RestaurantBranch>> getRestaurantBranches(
-            @RequestParam(required = false,  name = "page") final int page
-            , @RequestParam(required = false,  name = "pageSize") final int pageSize
+            @RequestParam(required = false,defaultValue = "${page}", name = "page") final int page
+            , @RequestParam(required = false,defaultValue = "${pageSize}", name = "pageSize") final int pageSize
             , @PathVariable long restaurantId) {
 
         log.debug(" GetMapping (getRestaurantBranches) page: {} pageSize: {} ",page,pageSize);

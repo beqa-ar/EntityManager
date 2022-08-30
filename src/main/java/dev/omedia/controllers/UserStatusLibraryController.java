@@ -25,12 +25,12 @@ public class UserStatusLibraryController {
 
     @GetMapping
     public ResponseEntity<Collection<UserStatus>> getUserStatuses(
-            @RequestParam(required = false,  name = "page") final int page
-            , @RequestParam(required = false,  name = "pageSize") final int pageSize) {
+            @RequestParam(required = false,defaultValue = "${page}", name = "page") final int page
+            , @RequestParam(required = false,defaultValue = "${pageSize}", name = "pageSize") final int pageSize) {
 
         log.debug(" GetMapping (getUserStatuses) page: {} pageSize: {} ",page,pageSize);
 
-        return new ResponseEntity<>(Pager.getPageContent(page,pageSize,service.getUserStatus())
+        return new ResponseEntity<>(Pager.getPageContent(page,pageSize,service.getUserStatuses())
                 , HttpStatus.OK);
     }
 
@@ -47,7 +47,7 @@ public class UserStatusLibraryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Boolean> updateUserStatus(@PathVariable final long id,@RequestBody final UserStatus UserStatus) {
+    public ResponseEntity<UserStatus> updateUserStatus(@PathVariable final long id,@RequestBody final UserStatus UserStatus) {
         log.debug(" PutMapping (updateUserStatus) id: {}",id);
         return new ResponseEntity<>(service.updateUserStatus(id, UserStatus),HttpStatus.CREATED);
     }

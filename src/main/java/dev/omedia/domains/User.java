@@ -21,7 +21,8 @@ public class User {
     @EqualsAndHashCode.Include
     private long id;
 
-    @Column(name = "status",nullable = false)
+    @OneToOne(targetEntity = TransportType.class)
+    @JoinColumn(name = "status_id")
     private UserStatus status;
 
     @Column(name = "nick_name",nullable = false)

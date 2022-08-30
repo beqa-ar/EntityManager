@@ -23,8 +23,8 @@ public class Glover {
     @EqualsAndHashCode.Include
     private long id;
 
-    @Column(name = "glover_id",nullable = false)
     @OneToOne(targetEntity = TransportType.class)
+    @JoinColumn(name = "transport_type_id")
     private  TransportType transportType;
 
     @Column(name = "name",nullable = false)

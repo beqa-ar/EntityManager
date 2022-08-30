@@ -25,8 +25,8 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<Collection<Order>> getOrders(
-            @RequestParam(required = false,  name = "page") final int page
-            , @RequestParam(required = false,  name = "pageSize") final int pageSize) {
+            @RequestParam(required = false,defaultValue = "${page}", name = "page") final int page
+            , @RequestParam(required = false,defaultValue = "${pageSize}", name = "pageSize") final int pageSize) {
 
         log.debug(" GetMapping (getOrders) page: {} pageSize: {} ",page,pageSize);
 

@@ -24,8 +24,8 @@ public class TransportTypeLibraryController {
 
     @GetMapping
     public ResponseEntity<Collection<TransportType>> getTransportTypes(
-            @RequestParam(required = false,  name = "page") final int page
-            , @RequestParam(required = false,  name = "pageSize") final int pageSize) {
+            @RequestParam(required = false,defaultValue = "${page}", name = "page") final int page
+            , @RequestParam(required = false,defaultValue = "${pageSize}", name = "pageSize") final int pageSize) {
 
         log.debug(" GetMapping (getTransportType) page: {} pageSize: {} ",page,pageSize);
 
@@ -46,7 +46,7 @@ public class TransportTypeLibraryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Boolean> updateTransportType(@PathVariable final long id,@RequestBody final TransportType transportType) {
+    public ResponseEntity<TransportType> updateTransportType(@PathVariable final long id,@RequestBody final TransportType transportType) {
         log.debug(" PutMapping (updateTransportType) id: {}",id);
         return new ResponseEntity<>(service.updateTransportType(id, transportType),HttpStatus.CREATED);
     }
